@@ -6,6 +6,8 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use app\models\News;
+use app\models\Theme;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
@@ -44,11 +46,36 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+			'showWithoutPost' => [
+                'class' => 'app\models\News',
+                'view' => 'withoutPost'
+            ],
+
         ];
     }
 
     public function actionIndex()
     {
+		 
+		$new = News::findOne(1);
+	    
+		  print_r($new  ); die;
+		  	$new = Theme::findOne(1);
+	    
+		  print_r($new  );
+	  //var_dump($model->find()->all());
+	//	 var_dump($model); die;
+		//  var_dump($model->getNews()); die;
+    //     var_dump($model->find()->all());
+	 //echo	News::find($id)->getNews()->limit(5)->all(); die;
+	  $news = News::find()->where(['theme'=>1])->one();
+	//  print_r( $news );
+     echo $news->body;  
+     echo $news->theme->name;
+	
+		 die;
+	 var_dump($model->getNews()); die;
+	//	var_dump($model->findBySql('SELECT * FROM news')->all()); die;
         return $this->render('index');
     }
 
